@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gcp.app.application.CellarService;
 import com.gcp.app.infraestructure.exception.ServiceException;
-import com.gcp.app.rest.domain.response.ProductRQ;
-import com.gcp.app.rest.domain.response.ProductRS;
+import com.gcp.app.rest.domain.request.CustomerRQ;
+import com.gcp.app.rest.domain.response.CustomerRS;
 
 @RestController
 @RequestMapping("/customer")
@@ -30,17 +30,17 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
-	public ResponseEntity<List<ProductRS>> getAllProducts(){
+	public ResponseEntity<List<CustomerRS>> getAllProducts(){
 		
-		List<ProductRS> response= cellarService.getAllProducts();
-		return (response != null) ? new ResponseEntity<List<ProductRS>>(response, HttpStatus.OK)
-				: new ResponseEntity<List<ProductRS>>(HttpStatus.NOT_FOUND);
+		List<CustomerRS> response= cellarService.getAllProducts();
+		return (response != null) ? new ResponseEntity<List<CustomerRS>>(response, HttpStatus.OK)
+				: new ResponseEntity<List<CustomerRS>>(HttpStatus.NOT_FOUND);
 	}
 	
 	
 	@RequestMapping(value = "/customer", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Boolean> addProducto(@RequestBody final  ProductRQ product){
+	public ResponseEntity<Boolean> addProducto(@RequestBody final  CustomerRQ product){
 		Boolean response = cellarService.addProduct(product);
 		return (response != null) ? new ResponseEntity<Boolean>(response, HttpStatus.OK)
 				: new ResponseEntity<Boolean>(HttpStatus.NOT_FOUND);

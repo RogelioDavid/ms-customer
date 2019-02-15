@@ -8,8 +8,8 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Service;
 
-import com.gcp.app.rest.domain.response.ProductRQ;
-import com.gcp.app.rest.domain.response.ProductRS;
+import com.gcp.app.rest.domain.request.CustomerRQ;
+import com.gcp.app.rest.domain.response.CustomerRS;
 
 
 import org.slf4j.Logger;
@@ -19,35 +19,35 @@ import org.slf4j.LoggerFactory;
 @Service
 public class CellarService {
 
-	private List<ProductRS> productList;
+	private List<CustomerRS> customertList;
 	private static final Logger logger = LoggerFactory.getLogger(CellarService.class);
 	
 	@PostConstruct
 	private void loadProducts() {
 
-		productList = new ArrayList<>();
-		productList.add(new ProductRS(1, "Primer Libro", 100, false));
-		productList.add(new ProductRS(2, "Libro Para Estudio", 200, true));
+		customertList = new ArrayList<>();
+		customertList.add(new CustomerRS(1, "Andrew Farrell", 19, false));
+		customertList.add(new CustomerRS(2, "Peter Wallace", 200, true));
 	}
 
-	public List<ProductRS> getAllProducts() {
-		 logger.info(".:: Totals of Products is:"+ productList.size());
-		return productList;
+	public List<CustomerRS> getAllProducts() {
+		 logger.info(".:: Totals of Customer is:"+ customertList.size());
+		return customertList;
 	}
 
-	public Boolean addProduct(ProductRQ product) {
+	public Boolean addProduct(CustomerRQ product) {
 		
-		 logger.info(".:: Apply Addgin new Product : {}", product);
+		 logger.info(".:: Apply Addgin new Customer : {}", product);
 		 
-		productList.add(new ProductRS(productList.size() + 1, product.getDescription(), product.getStock(),
-				product.isPaidForView()));
+		customertList.add(new CustomerRS(customertList.size() + 1, product.getFullName(), product.getAge(),
+				product.isFrequent()));
 		return true;
 	}
 
 	public Boolean discard(Integer idprd) {
 
-		 logger.info(".:: Apply discard Product with id: "+idprd);
-		Optional<ProductRS> rs = productList.stream().filter(product -> product.getIdProduct() == idprd).findFirst();
-		return productList.remove(rs.get());
+		 logger.info(".:: Apply discard Customer with id: "+idprd);
+		Optional<CustomerRS> rs = customertList.stream().filter(product -> product.getIdCustomer() == idprd).findFirst();
+		return customertList.remove(rs.get());
 	}
 }
